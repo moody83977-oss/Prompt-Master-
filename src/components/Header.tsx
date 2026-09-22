@@ -1,9 +1,9 @@
 import React from 'react';
-import { Clapperboard, Sparkles, Film, Eye, Award } from 'lucide-react';
+import { Clapperboard, Sparkles, Film, Eye, Award, PlayCircle, Download } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'generator' | 'presets' | 'guide';
-  onTabChange: (tab: 'generator' | 'presets' | 'guide') => void;
+  activeTab: 'generator' | 'presets' | 'guide' | 'workflow';
+  onTabChange: (tab: 'generator' | 'presets' | 'guide' | 'workflow') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
@@ -34,47 +34,73 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
           </div>
         </div>
 
-        {/* Navigation Controls */}
-        <nav className="flex items-center space-x-1.5 bg-neutral-900/90 p-1 rounded-xl border border-neutral-800">
-          <button
-            id="nav-tab-generator"
-            onClick={() => onTabChange('generator')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 flex items-center space-x-1.5 ${
-              activeTab === 'generator'
-                ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
-                : 'text-neutral-300 hover:text-white hover:bg-neutral-800/60'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>AI Director's Engine</span>
-          </button>
+        {/* Navigation Controls + Direct Download */}
+        <div className="flex items-center space-x-2 flex-wrap gap-y-2">
+          <nav className="flex items-center space-x-1.5 bg-neutral-900/90 p-1 rounded-xl border border-neutral-800">
+            <button
+              id="nav-tab-generator"
+              onClick={() => onTabChange('generator')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 flex items-center space-x-1.5 ${
+                activeTab === 'generator'
+                  ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800/60'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>AI Director's Engine</span>
+            </button>
 
-          <button
-            id="nav-tab-presets"
-            onClick={() => onTabChange('presets')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 flex items-center space-x-1.5 ${
-              activeTab === 'presets'
-                ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
-                : 'text-neutral-300 hover:text-white hover:bg-neutral-800/60'
-            }`}
-          >
-            <Film className="w-3.5 h-3.5" />
-            <span>Curated Master Presets</span>
-          </button>
+            <button
+              id="nav-tab-presets"
+              onClick={() => onTabChange('presets')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 flex items-center space-x-1.5 ${
+                activeTab === 'presets'
+                  ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800/60'
+              }`}
+            >
+              <Film className="w-3.5 h-3.5" />
+              <span>Curated Master Presets</span>
+            </button>
 
-          <button
-            id="nav-tab-guide"
-            onClick={() => onTabChange('guide')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 flex items-center space-x-1.5 ${
-              activeTab === 'guide'
-                ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
-                : 'text-neutral-300 hover:text-white hover:bg-neutral-800/60'
-            }`}
+            <button
+              id="nav-tab-guide"
+              onClick={() => onTabChange('guide')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 flex items-center space-x-1.5 ${
+                activeTab === 'guide'
+                  ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800/60'
+              }`}
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>Human Realism Formula</span>
+            </button>
+
+            <button
+              id="nav-tab-workflow"
+              onClick={() => onTabChange('workflow')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 flex items-center space-x-1.5 ${
+                activeTab === 'workflow'
+                  ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800/60'
+              }`}
+            >
+              <PlayCircle className="w-3.5 h-3.5 text-amber-400 group-hover:text-neutral-950" />
+              <span>Paano Gamitin?</span>
+            </button>
+          </nav>
+
+          <a
+            href="/api/download-zip"
+            download="cinemaster-prompt-studio.zip"
+            title="Download full project archive (.ZIP) for GitHub"
+            className="px-3 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 font-bold rounded-xl text-xs flex items-center space-x-1.5 transition-all shadow-md shadow-amber-500/20 shrink-0"
           >
-            <Eye className="w-3.5 h-3.5" />
-            <span>Human Realism Formula</span>
-          </button>
-        </nav>
+            <Download className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Download .ZIP (GitHub Ready)</span>
+            <span className="sm:hidden">Download .ZIP</span>
+          </a>
+        </div>
       </div>
     </header>
   );

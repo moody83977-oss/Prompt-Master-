@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
+import { execSync } from "child_process";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
@@ -28,6 +30,75 @@ function getGeminiClient(): GoogleGenAI | null {
 // Health check endpoint
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
+});
+
+// Download Project Bundle as standard .ZIP (Pinakamadaling i-extract sa Windows, Mac, at Phone)
+app.get("/api/download-zip", (_req, res) => {
+  try {
+    const zipPath = "/tmp/cinemaster-prompt-studio.zip";
+    execSync(
+      `python3 -c "
+import os, zipfile
+zip_path = '${zipPath}'
+exclude_dirs = {'node_modules', 'dist', '.git'}
+exclude_files = {'.env'}
+with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    for root, dirs, files in os.walk('.'):
+        dirs[:] = [d for d in dirs if d not in exclude_dirs]
+        for f in files:
+            if f in exclude_files:
+                continue
+            full_path = os.path.join(root, f)
+            arcname = os.path.relpath(full_path, '.')
+            zipf.write(full_path, arcname)
+"`,
+      { cwd: process.cwd() }
+    );
+
+    res.download(zipPath, "cinemaster-prompt-studio.zip", (err) => {
+      if (err) {
+        console.error("Zip download error:", err);
+      }
+      try {
+        if (fs.existsSync(zipPath)) {
+          fs.unlinkSync(zipPath);
+        }
+      } catch (cleanupErr) {}
+    });
+  } catch (err: any) {
+    console.error("Failed to create ZIP:", err);
+    res.status(500).json({ error: "Failed to create zip", details: err?.message });
+  }
+});
+
+// Download Project Bundle as .tar.gz
+app.get("/api/download-project", (_req, res) => {
+  try {
+    const archivePath = "/tmp/cinemaster-prompt-studio.tar.gz";
+    // Pack project avoiding node_modules, dist, .git
+    execSync(
+      "tar -czf " +
+        archivePath +
+        " --exclude='./node_modules' --exclude='./dist' --exclude='./.git' --exclude='./.env' .",
+      { cwd: process.cwd() }
+    );
+
+    res.download(archivePath, "cinemaster-prompt-studio.tar.gz", (err) => {
+      if (err) {
+        console.error("Download error:", err);
+      }
+      try {
+        if (fs.existsSync(archivePath)) {
+          fs.unlinkSync(archivePath);
+        }
+      } catch (cleanupErr) {
+        // ignore cleanup error
+      }
+    });
+  } catch (err: any) {
+    console.error("Failed to package project:", err);
+    res.status(500).json({ error: "Failed to create archive", details: err?.message });
+  }
 });
 
 // Master Prompt Generation Endpoint

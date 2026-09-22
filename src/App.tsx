@@ -4,12 +4,13 @@ import { PromptGeneratorForm } from './components/PromptGeneratorForm';
 import { PromptDisplayCard } from './components/PromptDisplayCard';
 import { PresetGallery } from './components/PresetGallery';
 import { MasterFormulaGuide } from './components/MasterFormulaGuide';
+import { WorkflowStepsModal } from './components/WorkflowStepsModal';
 import { MASTER_PRESETS } from './data/presets';
 import { MasterPromptData } from './types';
 import { Sparkles, Film, Eye, Clapperboard, CheckCircle2, ShieldCheck, HeartPulse } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'generator' | 'presets' | 'guide'>('generator');
+  const [activeTab, setActiveTab] = useState<'generator' | 'presets' | 'guide' | 'workflow'>('generator');
   const [currentPrompt, setCurrentPrompt] = useState<MasterPromptData>(MASTER_PRESETS[0]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -136,6 +137,11 @@ export default function App() {
         {/* Tab 3: The Human Realism Formula Guide */}
         {activeTab === 'guide' && (
           <MasterFormulaGuide />
+        )}
+
+        {/* Tab 4: Step-by-Step Workflow (Paano Gagawin) */}
+        {activeTab === 'workflow' && (
+          <WorkflowStepsModal />
         )}
       </main>
 

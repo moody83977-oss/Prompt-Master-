@@ -126,68 +126,70 @@ ${data.negativePrompt}
         </div>
 
         {/* View Tabs */}
-        <div className="flex flex-wrap items-center gap-1.5 mt-6 pt-4 border-t border-neutral-800/60">
-          <button
-            onClick={() => setActiveTab('midjourney')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
-              activeTab === 'midjourney'
-                ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
-                : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
-            }`}
-          >
-            <Film className="w-3.5 h-3.5" />
-            <span>Midjourney Prompt</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('video')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
-              activeTab === 'video'
-                ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
-                : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
-            }`}
-          >
-            <Video className="w-3.5 h-3.5" />
-            <span>Video AI (Sora/Runway/Veo)</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('acting')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
-              activeTab === 'acting'
-                ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
-                : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
-            }`}
-          >
-            <UserCheck className="w-3.5 h-3.5" />
-            <span>Human Acting Blueprint</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('cinema')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
-              activeTab === 'cinema'
-                ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
-                : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
-            }`}
-          >
-            <Camera className="w-3.5 h-3.5" />
-            <span>Cinematography & Rig</span>
-          </button>
-
-          {data.dialogueSnippet && (
+        <div className="flex flex-wrap items-center justify-between gap-2 mt-6 pt-4 border-t border-neutral-800/60">
+          <div className="flex flex-wrap items-center gap-1.5">
             <button
-              onClick={() => setActiveTab('script')}
+              onClick={() => setActiveTab('midjourney')}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
-                activeTab === 'script'
+                activeTab === 'midjourney'
                   ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
                   : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
               }`}
             >
-              <MessageSquare className="w-3.5 h-3.5" />
-              <span>Dialogue / Script</span>
+              <Film className="w-3.5 h-3.5" />
+              <span>Midjourney Prompt</span>
             </button>
-          )}
+
+            <button
+              onClick={() => setActiveTab('video')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
+                activeTab === 'video'
+                  ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
+              }`}
+            >
+              <Video className="w-3.5 h-3.5" />
+              <span>Video AI (Sora/Runway/Veo)</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('acting')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
+                activeTab === 'acting'
+                  ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
+              }`}
+            >
+              <UserCheck className="w-3.5 h-3.5" />
+              <span>Human Acting Blueprint</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('cinema')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
+                activeTab === 'cinema'
+                  ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
+              }`}
+            >
+              <Camera className="w-3.5 h-3.5" />
+              <span>Cinematography & Rig</span>
+            </button>
+
+            {data.dialogueSnippet && (
+              <button
+                onClick={() => setActiveTab('script')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-all ${
+                  activeTab === 'script'
+                    ? 'bg-amber-500 text-neutral-950 font-semibold shadow-sm'
+                    : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
+                }`}
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Dialogue / Script</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -227,6 +229,13 @@ ${data.negativePrompt}
 
             <div className="bg-neutral-950 p-4 sm:p-5 rounded-xl border border-neutral-800 font-mono text-xs sm:text-sm text-amber-100/90 leading-relaxed whitespace-pre-wrap select-all shadow-inner">
               {data.masterPromptMidjourney}
+            </div>
+
+            {/* Quick Action Guide */}
+            <div className="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20 text-xs text-amber-300/90 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <span>📌 <strong>Paano gamitin:</strong> I-click ang "Kopyahin", buksan ang Midjourney sa Discord/Web, i-type ang <code className="bg-neutral-900 px-1 py-0.5 rounded text-amber-200">/imagine</code> at i-paste.</span>
+              </span>
             </div>
 
             {/* Directorial Vision Note */}
@@ -271,6 +280,13 @@ ${data.negativePrompt}
 
             <div className="bg-neutral-950 p-4 sm:p-5 rounded-xl border border-neutral-800 font-mono text-xs sm:text-sm text-neutral-200 leading-relaxed whitespace-pre-wrap select-all shadow-inner">
               {data.masterPromptVideoAI}
+            </div>
+
+            {/* Quick Action Guide */}
+            <div className="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20 text-xs text-amber-300/90 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <span>🎬 <strong>Paano gamitin:</strong> I-paste sa RunwayML Gen-3, Kling AI, o Luma Dream Machine. Kung may Midjourney image ka na, gamitin itong "Image-to-Video" prompt para pareho ang mukha ng aktor.</span>
+              </span>
             </div>
           </div>
         )}
